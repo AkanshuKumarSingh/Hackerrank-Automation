@@ -14,13 +14,23 @@ async function fn() {
         let pagesArr = await browser.pages();
         page = pagesArr[0];
         await page.goto(url);
-        await page.type("#input-1", "EmailId", { delay: 100 });
+        await page.type("#input-1", "Email", { delay: 100 });
         await page.type("#input-2", "Password", { delay: 100 });
+        
+        //login
         await waitClickNavigate(".ui-btn.ui-btn-large.ui-btn-primary.auth-button.ui-btn-styled");
         await waitClickNavigate("[title='Interview Preparation Kit'] a");
         await waitClickNavigate("[data-attr1='warmup']");
+        await page.waitForSelector(".js-track-click.challenge-list-item", { visible: true })
+
+        let hrefArr = await page.evaluate(function () {
+            
+        })
+
         await waitClickNavigate(".ui-btn.ui-btn-normal.primary-cta.ui-btn-primary.ui-btn-styled");
         await page.waitForSelector("[data-attr2='Editorial']", { visible: true });
+        
+
         await page.click("[data-attr2='Editorial']");
         await handleLockBtn(".ui-btn.ui-btn-normal.ui-btn-primary.ui-btn-styled");
         code = await page.evaluate(function () {
@@ -64,7 +74,7 @@ async function handleLockBtn(selector) {
 
 async function pasteCode() {
     try {
-        await page.waitForSelector("[type='checkbox']")
+        await page.waitForSelector("[type='checkbox']",{visible : true})
         await page.click("[type='checkbox']");
         await page.waitForSelector("#input-1");
         await page.type("#input-1", code);
